@@ -1,0 +1,36 @@
+# Actualise stats.json chaque nuit depuis Strava, puis republie le site.
+# Nécessite 3 secrets de dépôt (Settings → Secrets and variables → Actions) :
+#   STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, STRAVA_REFRESH_TOKEN
+name: Actualiser les stats Strava
+
+on:
+  schedule:
+    - cron: "30 4 * * *"   # chaque nuit à 04:30 UTC (06:30 en Suisse l'été)
+  workflow_dispatch: {}     # + bouton "Run workflow" pour forcer à la main
+
+permissions:
+  contents: write
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Recalculer la fenêtre de 28 jours
+        env:
+          STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+        run: python3 scripts/update_stats.py
+      - name: Committer si les chiffres ont changé
+        run: |
+          git config user.name "stats-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add stats.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Stats Strava du jour"
+            git push
+          fi
