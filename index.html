@@ -4802,7 +4802,17 @@ const DONNEES = {
     // Un span AVEC une classe, lui, porte de la mise en page : le déballer
     // effaçait la date des cartes de résultats, dont le texte se retrouvait
     // en vrac au-dessus de la photo. Comme <a> et <p>, on le garde tel quel.
-    if (el.tagName === 'SPAN' && !el.className) deballer(el);
+    // EXCEPTION (30.08.2026) : un span qui porte une clé de traduction est
+    // GARDÉ. Le déballer emportait l'attribut `data-i18n` avec lui, et la
+    // bascule de langue ne retrouvait plus le texte : le bouton « Voir les
+    // résultats » et les titres de « Mon histoire » restaient en français
+    // jusqu'au rechargement de la page (signalé par Nicolas). Ces spans-là
+    // sont de toute façon seuls dans leur parent, ou voisins d'un span qui
+    // subsiste : les garder ne recolle aucun fragment de moins qu'avant, et
+    // `bureau_intact.py` le vérifie au pixel.
+    var traduit = el.hasAttribute('data-i18n') || el.hasAttribute('data-i18n-alt') ||
+                  el.hasAttribute('data-i18n-aria') || el.hasAttribute('data-i18n-subject');
+    if (el.tagName === 'SPAN' && !el.className && !traduit) deballer(el);
     else el.removeAttribute('data-var');
   });
 })();
