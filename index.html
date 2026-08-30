@@ -2780,7 +2780,7 @@ a.pa-logo:hover{color:var(--ink);transform:scale(1.07)}
       <p data-var="tel" data-i18n="deal_p_tel"></p>
     </div>
     <div class="deal-actions">
-      <a class="btn btn1" href="mailto:contact@ncomby.ch?subject=Partenariat%20-%20Nicolas%20Comby"><span data-i18n="deal_cta1"></span> <span class="arr">→</span></a>
+      <a class="btn btn1" href="mailto:contact@ncomby.ch?subject=Partenariat%20-%20Nicolas%20Comby" data-i18n-subject="mail_subject"><span data-i18n="deal_cta1"></span> <span class="arr">→</span></a>
       <a class="btn btn2" href="#/partenariat" data-i18n="deal_cta2"></a>
     </div>
   </div>
@@ -3041,7 +3041,7 @@ a.pa-logo:hover{color:var(--ink);transform:scale(1.07)}
            même page ». -->
       <p class="pa-q rise" data-var="tel" data-i18n="pa_q_tel"></p>
       <div class="pa-cta rise">
-        <a class="btn btn1" href="mailto:contact@ncomby.ch?subject=Partenariat%20-%20Nicolas%20Comby"><span data-i18n="pa_cta1"></span> <span class="arr">→</span></a>
+        <a class="btn btn1" href="mailto:contact@ncomby.ch?subject=Partenariat%20-%20Nicolas%20Comby" data-i18n-subject="mail_subject"><span data-i18n="pa_cta1"></span> <span class="arr">→</span></a>
         <a class="pa-alt" href="https://www.instagram.com/nicolas_comby/" target="_blank" rel="noopener" data-i18n="pa_cta2"></a>
       </div>
       <!-- Pas de <br> : la coupure forcée gaspillait une ligne entière alors que
@@ -3746,6 +3746,7 @@ const DONNEES = {
      data-i18n="cle"       -> innerHTML
      data-i18n-alt="cle"   -> attribut alt
      data-i18n-aria="cle"  -> attribut aria-label
+     data-i18n-subject="cle" -> objet d'un lien `mailto:` (voir plus bas)
 
    Ce fichier est chargé juste après donnees.js et avant tous les
    autres scripts (src-v2/build.py) : au moment où il s'exécute, toutes
@@ -3769,6 +3770,10 @@ const DONNEES = {
 
   window.I18N = {
     fr: {
+      /* Objet du message pré-rempli par les deux boutons « Prendre contact »
+         (bande de l'accueil et page Partenariat), via data-i18n-subject. */
+      mail_subject: "Partenariat - Nicolas Comby",
+
       /* --- nav (barre + panneau plein écran du téléphone) ------------- */
       nav_results: "Résultats",
       nav_cal: "Calendrier",
@@ -4024,6 +4029,10 @@ const DONNEES = {
     },
     en: {
       /* --- nav ------------------------------------------------------ */
+      /* Même objet, en anglais : « Partnership », le mot déjà employé par la
+         nav EN. Un objet de courriel se formule pareil dans les deux langues. */
+      mail_subject: "Partnership - Nicolas Comby",
+
       nav_results: "Results",
       nav_cal: "Calendar",
       nav_partner: "Partnership",
@@ -4352,6 +4361,18 @@ const DONNEES = {
     });
     [].slice.call(root.querySelectorAll('[data-i18n-aria]')).forEach(function (el) {
       el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria')));
+    });
+    /* Objet d'un lien `mailto:` : un visiteur anglophone qui écrit à Nicolas
+       ne doit pas recevoir un objet en français dans son logiciel de mail.
+       Le href est RECONSTRUIT depuis l'adresse seule (tout ce qui précède le
+       « ? ») : rebasculer FR->EN->FR ne peut donc pas empiler les paramètres.
+       encodeURIComponent est indispensable — sans lui, un espace ou une
+       apostrophe casserait le lien. */
+    [].slice.call(root.querySelectorAll('[data-i18n-subject]')).forEach(function (el) {
+      var adresse = (el.getAttribute('href') || '').split('?')[0];
+      if (!adresse) return;
+      el.setAttribute('href', adresse + '?subject=' +
+        encodeURIComponent(t(el.getAttribute('data-i18n-subject'))));
     });
   }
   window.applyI18nText = applyI18nText;
