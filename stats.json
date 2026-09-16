@@ -1,11 +1,11 @@
 {
-  "debut": "2026-08-18",
-  "fin": "2026-09-14",
-  "maj": "2026-09-15",
+  "debut": "2026-08-19",
+  "fin": "2026-09-15",
+  "maj": "2026-09-16",
   "heures": 36,
-  "natation": 20,
+  "natation": 16,
   "velo": 600,
-  "course": 101,
+  "course": 107,
   "note": {
     "fr": "période d'examens comprise",
     "en": "exam period included"
