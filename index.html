@@ -651,6 +651,13 @@ footer .row{display:flex;justify-content:space-between;align-items:baseline;gap:
 footer h2{font-size:clamp(30px,4.4vw,54px)}
 footer .links{display:flex;gap:26px;flex-wrap:wrap}
 .fin{margin-top:clamp(40px,6vh,70px);font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;color:var(--ink-3)}
+/* Lien vers les mentions légales (02.10.2026) : même voix que le copyright,
+   souligné pour se lire comme un lien sans prendre de couleur (le rose reste
+   à « Écrivez-moi »). Le padding vertical, rendu par une marge négative,
+   porte la zone tactile à 44 px sans bouger la ligne (piège 106). */
+.fin-lien{display:inline-block;margin:-15px 0 -15px 2em;padding:15px 0;color:var(--ink-3);
+  text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;transition:color .25s,text-decoration-color .25s}
+.fin-lien:hover,.fin-lien:focus-visible{color:var(--ink-2);text-decoration-color:var(--ink-3)}
 
 /* PROGRESSIVE ENHANCEMENT : .rise n'est masqué QUE si le JS d'anim tourne (html.js-anim).
    Si JS/GSAP échoue ou prefers-reduced-motion : tout reste visible. */
@@ -1358,6 +1365,11 @@ footer .links{display:flex;gap:26px;flex-wrap:wrap}
   footer .links{gap:14px 22px}
   footer .links a{padding-block:8px}
   .fin{margin-top:clamp(24px,3.6vh,34px)}
+  /* « Mentions légales » ne tient pas sur la ligne du copyright en 390 px :
+     passé à la ligne, il gardait son retrait de 2em et flottait décalé. Au
+     téléphone il prend donc TOUJOURS sa ligne, calé à gauche ; la marge
+     négative laisse ~8 px entre les deux lignes et garde la zone de 44 px. */
+  .fin-lien{display:block;width:fit-content;margin:-7px 0 -15px}
 }
 
 /* ---------- ENTRE 641 ET 900 px : la composition téléphone s'élargit ----------
@@ -2367,6 +2379,17 @@ a.pa-logo:hover{color:var(--ink);transform:scale(1.07)}
   .page h1{font-size:clamp(30px,8.6vw,40px)}
   .page .lede{margin-top:18px}
 }
+
+/* ---------- Mentions légales (02.10.2026) ----------
+   Gabarit de la page Voile, sans photo : le premier titre ouvre directement
+   le corps, avec la même ouverture que la page Équipe (piège 86), et la date
+   de mise à jour ferme la page au rythme d'un titre. */
+#page-mentions .page-body > .wrap > h2:first-child{margin-top:clamp(34px,5vh,54px)}
+#page-mentions .pg-prose + .pg-fine{margin-top:clamp(46px,7vh,76px)}
+/* Le courriel dans la prose : souligné, ivoire plein, sans rose. */
+#page-mentions .pg-prose a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--ink-3);
+  text-underline-offset:3px;transition:text-decoration-color .25s}
+#page-mentions .pg-prose a:hover{text-decoration-color:var(--ink)}
 </style>
 
 <div class="grain" aria-hidden="true"></div>
@@ -2855,7 +2878,7 @@ a.pa-logo:hover{color:var(--ink);transform:scale(1.07)}
         <a class="lnk" href="https://www.linkedin.com/in/ncomby" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </div>
-    <div class="fin" data-i18n="ft_copyright"></div>
+    <div class="fin"><span data-i18n="ft_copyright"></span><a class="fin-lien" href="#/mentions-legales" data-i18n="ft_legal"></a></div>
   </div>
 </footer>
 
@@ -3183,6 +3206,61 @@ a.pa-logo:hover{color:var(--ink);transform:scale(1.07)}
     </figure>
     <div class="pg-prose rise" id="newsBody"></div>
     <div class="pg-cta rise"><a class="lnk" id="newsNext" href="#/calendrier"></a></div>
+  </div></div>
+</section>
+
+<!-- Mentions légales et confidentialité (02.10.2026). Contenu établi après
+     l'étude juridique consignée dans docs/JURIDIQUE.md : chaque phrase
+     correspond à un fait vérifié (ce que le site traite réellement) ou à une
+     exigence de la LPD (art. 19), de la LTC (art. 45c) ou de la LCD
+     (art. 3 al. 1 let. s). Avant de changer le site (formulaire, mesure
+     d'audience, vidéo intégrée, nouveau prestataire), relire cette page :
+     elle doit rester VRAIE. Gabarit de la page Voile, sans photo ni rose. -->
+<section class="page" id="page-mentions">
+  <div class="page-head"><div class="wrap">
+    <a class="back-link" href="#" data-route-back data-i18n="course_back"></a>
+    <h1 data-i18n="ml_title"></h1>
+    <p class="lede" data-i18n="ml_lede"></p>
+  </div></div>
+  <div class="page-body"><div class="wrap">
+
+    <h2 class="rise" data-i18n="ml_h_editeur"></h2>
+    <div class="pg-prose rise">
+      <p data-i18n="ml_editeur"></p>
+      <p data-i18n="ml_editeur_p2"></p>
+    </div>
+
+    <h2 class="rise" data-i18n="ml_h_heb"></h2>
+    <div class="pg-prose rise">
+      <p data-i18n="ml_heb"></p>
+    </div>
+
+    <h2 class="rise" data-i18n="ml_h_donnees"></h2>
+    <div class="pg-prose rise">
+      <p data-i18n="ml_d1"></p>
+      <p data-i18n="ml_d2"></p>
+      <p data-i18n="ml_d3"></p>
+      <p data-i18n="ml_d4"></p>
+    </div>
+
+    <h2 class="rise" data-i18n="ml_h_etranger"></h2>
+    <div class="pg-prose rise">
+      <p data-i18n="ml_e1"></p>
+    </div>
+
+    <h2 class="rise" data-i18n="ml_h_droits"></h2>
+    <div class="pg-prose rise">
+      <p data-i18n="ml_r1"></p>
+    </div>
+
+    <h2 class="rise" data-i18n="ml_h_liens"></h2>
+    <div class="pg-prose rise">
+      <p data-i18n="ml_l1"></p>
+      <p data-i18n="ml_l2"></p>
+    </div>
+
+    <p class="pg-fine rise" data-i18n="ml_maj"></p>
+
   </div></div>
 </section>
 
@@ -3756,10 +3834,13 @@ const DONNEES = {
   ],
 
   /* --- ENTRAÎNEMENT (bandeau "La fabrique", fenêtre 28 jours) -------
-     Repris tel quel de stats.json. Régénéré chaque nuit par la
-     GitHub Action (tâche 05) ; ces valeurs servent de repli hors ligne
-     et d'aperçu. "ajustements" (activités hors montre) : structure et
-     usage définis à la tâche 05, laisser vide d'ici là. */
+     SAISIE MANUELLE depuis le 02.10.2026 : le robot Strava est arrêté
+     (la politique API de Strava, §2.3, réserve l'affichage des données
+     d'un utilisateur à cet utilisateur ; voir docs/JURIDIQUE.md).
+     Nicolas relève lui-même ses totaux dans Strava et les recopie ici :
+     debut / fin = la fenêtre, maj = jour du relevé, heures, km par sport.
+     Ne PAS rebrancher un script sur l'API Strava pour remplir ce bloc.
+     "ajustements" (activités hors montre) : laisser vide. */
   entrainement: {
     debut: "2026-08-14",
     fin: "2026-09-10",
@@ -3939,6 +4020,7 @@ const DONNEES = {
       /* --- footer / contact ---------------------------------------- */
       ft_title: "Écrivez-moi",
       ft_copyright: "© 2026 Nicolas Comby, Lausanne",
+      ft_legal: "Mentions légales",
 
       /* --- partenaires (bloc « Ils rendent l'aventure possible ») --- */
       prt_title: "Ils rendent l'aventure possible",
@@ -4065,7 +4147,32 @@ const DONNEES = {
       pa_eco_p_bureau: "Je m'entraîne et je cours au sein du <b>Racing Team - VPA / JC Sports Coaching</b>. Ses partenaires soutiennent l'équipe&nbsp;: textile, nutrition, et une part des inscriptions et des camps.",
       pa_eco_p_tel: "Je cours au sein du <b>Racing Team - VPA / JC Sports Coaching</b>. Ses partenaires soutiennent l'équipe&nbsp;: textile, nutrition, une part des inscriptions et des camps.",
       pa_eco_note_bureau: "Ce sont les partenaires de l'équipe, pas les miens&nbsp;: ils soutiennent le collectif, pas un coureur en particulier. Ma saison, elle, reste entièrement à financer. Un partenariat personnel, lui, la rendrait possible, et porterait <em>vos</em> couleurs.",
-      pa_eco_note_tel: "Ce sont les partenaires de l'équipe, pas les miens&nbsp;: ils soutiennent le collectif, pas un coureur en particulier. Ma saison reste entièrement à financer. Un partenariat personnel la rendrait possible, et porterait <em>vos</em> couleurs."
+      pa_eco_note_tel: "Ce sont les partenaires de l'équipe, pas les miens&nbsp;: ils soutiennent le collectif, pas un coureur en particulier. Ma saison reste entièrement à financer. Un partenariat personnel la rendrait possible, et porterait <em>vos</em> couleurs.",
+
+      /* --- page Mentions légales (02.10.2026) ----------------------
+         Chaque phrase décrit ce que le site fait RÉELLEMENT (relevé du
+         02.10.2026, voir docs/JURIDIQUE.md). Si le site change, ces textes
+         doivent changer avec lui. */
+      ml_title: "Mentions légales et confidentialité",
+      ml_lede: "Qui édite ce site, quelles données il traite et comment exercer vos droits. En bref&nbsp;: aucun cookie, aucun formulaire, aucune mesure d'audience.",
+      ml_h_editeur: "Éditeur",
+      ml_editeur: "<b>Nicolas Comby</b><br>Rue du Jura 9<br>1004 Lausanne, Suisse<br><a href=\"mailto:contact@ncomby.ch\">contact@ncomby.ch</a>",
+      ml_editeur_p2: "Ce site est personnel. J'en suis l'auteur et le responsable du traitement des données personnelles au sens de la loi fédérale sur la protection des données (LPD).",
+      ml_h_heb: "Hébergement",
+      ml_heb: "Le site est hébergé par <b>GitHub Pages</b> (GitHub, Inc., États-Unis). Le nom de domaine et la messagerie sont gérés par <b>Infomaniak Network SA</b>, à Genève.",
+      ml_h_donnees: "Données traitées",
+      ml_d1: "Ce site n'a ni formulaire, ni compte, ni outil de mesure d'audience, ni cookie, ni contenu intégré depuis un autre service (vidéo, carte, réseau social). Les polices et les images sont servies par le site lui-même.",
+      ml_d2: "<b>Visites.</b> Comme tout hébergeur, GitHub enregistre l'adresse IP de chaque visiteur, pour la sécurité de son service. Je n'ai pas accès à ces journaux et je ne les exploite pas.",
+      ml_d3: "<b>Messages.</b> Si vous m'écrivez, je reçois votre adresse et votre message. Je m'en sers uniquement pour vous répondre et, le cas échéant, pour le suivi d'un partenariat. Je ne les transmets à personne et je les supprime quand ils ne sont plus utiles.",
+      ml_d4: "<b>Langue.</b> Votre choix entre français et anglais est mémorisé dans votre navigateur (stockage local), pour ne pas vous le redemander. Il ne quitte pas votre appareil et ne permet pas de vous identifier. Vous pouvez le refuser en effaçant les données de ce site dans les réglages de votre navigateur&nbsp;: le site s'ouvre alors en français.",
+      ml_h_etranger: "Données hors de Suisse",
+      ml_e1: "Deux prestataires peuvent traiter des données hors de Suisse. <b>GitHub</b> (États-Unis), pour l'hébergement&nbsp;: l'entreprise est certifiée selon le Swiss-U.S. Data Privacy Framework, que le Conseil fédéral reconnaît comme offrant une protection adéquate. <b>Apple</b> (Irlande et États-Unis), parce que les messages que je reçois sont transférés vers ma boîte iCloud&nbsp;: Apple encadre ces transferts par des clauses contractuelles types.",
+      ml_h_droits: "Vos droits",
+      ml_r1: "Vous pouvez me demander à tout moment quelles données je détiens à votre sujet, et les faire rectifier ou effacer, en écrivant à <a href=\"mailto:contact@ncomby.ch\">contact@ncomby.ch</a>. Vous pouvez aussi vous adresser au Préposé fédéral à la protection des données et à la transparence (PFPDT).",
+      ml_h_liens: "Liens et contenus",
+      ml_l1: "Le site renvoie vers d'autres sites (réseaux sociaux, organisateurs de courses, partenaires), qui appliquent leurs propres règles. Je ne réponds pas de leur contenu.",
+      ml_l2: "Les textes sont de moi. Les photos sont de moi, de mes proches ou des photographes des épreuves&nbsp;; leur réutilisation demande une autorisation. Les logos appartiennent à leurs marques et sont affichés avec leur accord.",
+      ml_maj: "Mise à jour&nbsp;: 2 octobre 2026"
     },
     en: {
       /* --- nav ------------------------------------------------------ */
@@ -4197,6 +4304,7 @@ const DONNEES = {
       /* --- footer / contact ---------------------------------------- */
       ft_title: "Get in touch",
       ft_copyright: "© 2026 Nicolas Comby, Lausanne",
+      ft_legal: "Legal notice",
 
       /* --- partners block --- */
       prt_title: "They make the adventure possible",
@@ -4323,7 +4431,29 @@ const DONNEES = {
       pa_eco_p_bureau: "I train and race with the <b>Racing Team - VPA / JC Sports Coaching</b>. Its partners support the team: apparel, nutrition, and a share of the entry fees and camps.",
       pa_eco_p_tel: "I race with the <b>Racing Team - VPA / JC Sports Coaching</b>. Its partners support the team: apparel, nutrition, a share of the entry fees and camps.",
       pa_eco_note_bureau: "These are the team's partners, not mine: they support the group, not any one athlete. My season, though, remains entirely to fund. A personal partnership would make it possible, and would carry <em>your</em> colours.",
-      pa_eco_note_tel: "These are the team's partners, not mine: they support the group, not any one athlete. My season remains entirely to fund. A personal partnership would make it possible, and would carry <em>your</em> colours."
+      pa_eco_note_tel: "These are the team's partners, not mine: they support the group, not any one athlete. My season remains entirely to fund. A personal partnership would make it possible, and would carry <em>your</em> colours.",
+
+      /* --- page Mentions légales (02.10.2026) ---------------------- */
+      ml_title: "Legal notice and privacy",
+      ml_lede: "Who publishes this site, what data it handles and how to exercise your rights. In short: no cookies, no forms, no visitor tracking.",
+      ml_h_editeur: "Publisher",
+      ml_editeur: "<b>Nicolas Comby</b><br>Rue du Jura 9<br>1004 Lausanne, Switzerland<br><a href=\"mailto:contact@ncomby.ch\">contact@ncomby.ch</a>",
+      ml_editeur_p2: "This is a personal website. I wrote it, and I am the controller of personal data under the Swiss Federal Act on Data Protection (FADP).",
+      ml_h_heb: "Hosting",
+      ml_heb: "The site is hosted by <b>GitHub Pages</b> (GitHub, Inc., United States). The domain name and email are managed by <b>Infomaniak Network SA</b> in Geneva.",
+      ml_h_donnees: "Data handled",
+      ml_d1: "This site has no forms, no accounts, no analytics, no cookies and no content embedded from other services (videos, maps, social media). Fonts and images are served by the site itself.",
+      ml_d2: "<b>Visits.</b> Like any host, GitHub logs each visitor's IP address to keep its service secure. I have no access to these logs and do not use them.",
+      ml_d3: "<b>Messages.</b> If you write to me, I receive your address and your message. I use them only to reply and, where relevant, to follow up on a partnership. I share them with no one and delete them once they are no longer needed.",
+      ml_d4: "<b>Language.</b> Your choice between French and English is saved in your browser (local storage), so you are not asked again. It never leaves your device and cannot identify you. You can refuse it by clearing this site's data in your browser settings: the site then opens in French.",
+      ml_h_etranger: "Data outside Switzerland",
+      ml_e1: "Two providers may process data outside Switzerland. <b>GitHub</b> (United States), for hosting: the company is certified under the Swiss-U.S. Data Privacy Framework, which the Swiss Federal Council recognises as providing adequate protection. <b>Apple</b> (Ireland and United States), because the messages I receive are forwarded to my iCloud mailbox: Apple covers these transfers with standard contractual clauses.",
+      ml_h_droits: "Your rights",
+      ml_r1: "You can ask me at any time what data I hold about you, and have it corrected or deleted, by writing to <a href=\"mailto:contact@ncomby.ch\">contact@ncomby.ch</a>. You can also contact the Federal Data Protection and Information Commissioner (FDPIC).",
+      ml_h_liens: "Links and content",
+      ml_l1: "This site links to other websites (social media, race organisers, partners), which apply their own rules. I am not responsible for their content.",
+      ml_l2: "The texts are my own. The photos are mine, taken by people close to me, or by race photographers; reusing them requires permission. Logos belong to their brands and appear with their consent.",
+      ml_maj: "Last updated: 2 October 2026"
     }
   };
 
@@ -6934,7 +7064,10 @@ const DONNEES = {
   var ROUTES = {
     '/calendrier': 'page-calendrier',
     '/partenariat': 'page-partenariat',
-    '/voile': 'page-voile'
+    '/voile': 'page-voile',
+    /* Mentions légales et confidentialité (02.10.2026) : page statique,
+       ouverte par le seul lien du pied de page. */
+    '/mentions-legales': 'page-mentions'
   };
   // Position quittée sur l'accueil, restaurée telle quelle au retour.
   var homeScroll = 0;
